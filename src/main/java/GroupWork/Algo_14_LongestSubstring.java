@@ -1,5 +1,6 @@
 package GroupWork;
 
+import org.testng.Assert;
 import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
 
@@ -25,63 +26,64 @@ public class Algo_14_LongestSubstring {
     @DataProvider(name = "input")
     public Object[][] getInputArrays(){
         return new Object[][]{
-                {new String[]{"abcabcbb"}, new String[]{"abc"} },
-                {new String[]{"bbbbb"}, new String[]{"b"} },
-                {new String[]{"pwwkew"}, new String[]{"wke"} },
-                {new String[]{" "}, new String[]{" "} },
-                {new String[]{"au"}, new String[]{"au"} },
-                {new String[]{"aab"}, new String[]{"ab"} },
-                {new String[]{"ohomm"}, new String[]{"hom"} },
-                {new String[]{"asljlj"}, new String[]{"aslj"} },
-                {new String[]{"clementisacap"}, new String[]{"mentisac"} },
-                {new String[]{""}, new String[]{""} },
+                {"abcabcbb",    "abc" },
+                {"clementisacap", "mentisac" },
+                {"pwwkew",      "wke"},
+                {"asljlj",      "aslj" },
+                {"ohomm",       "hom"},
+                {"bbbbb",       "b"},
+                {"au",          "au"},
+                {"aab",         "ab"},
+                {" ",           " " },
+                {"",            ""},
         };
     }
     @Test(dataProvider = "input")
-    public void test1(String[] expected, String[] input){
-       // Assert.assertEquals(expected,);
+    public void test1(String input, String expected){
+        System.out.println(input +" "+ expected);
+        Assert.assertEquals(myLongestSubstring(input), expected);
+       // Assert.assertEquals(bestLongestSubstringWithoutDuplication(input), expected);
     }
 
-    public static void main(String[] args) {
-        String str = "abcabcbb";    // The answer is "abc", with the length of 3.
-        str = "bbbbb";
-        str = "pwwkew";
-//        str = " ";
-//        str = "au";
-//        str = "aab";
-//        str = "ohomm";
-//        str = "asljlj";
-//        str = "clementisacap";
-//        str = "";
-        System.out.println("lengthOfLongestSubstring(str) = " + myLengthOfLongestSubstring(str));
-        System.out.println(bestLongestSubstringWithoutDuplication(str));
-    }
-
-
-    // my solution
-    public static String myLengthOfLongestSubstring(String s) {
-        if (s.length() == 1) return s;
-        int count = 0;
+    // my final solution with String
+    public static String myLongestSubstring(String str) {   // best solution for me
+        if (str.length() == 1) return str;
         String substr = "";
         String longest = "";
-        Map<String, Integer> map = new LinkedHashMap<>();
-        for (int i = 0; i < s.length(); i++) {
-            char c = s.charAt(i);
+        for (int i = 0; i < str.length(); i++) {
+            char c = str.charAt(i);
             if (!substr.contains(c + "")) {
                 substr += c;
-                if (i == s.length() - 1 && substr.length() == s.length()) return s;
+            } else {
+                if (longest.length() < substr.length()) longest = substr;
+                int indexDuplicated = substr.indexOf(c);
+                substr = substr.substring(indexDuplicated + 1) + c;
+            }
+        }
+        if (longest.length() < substr.length()) longest = substr; // checks if longest contains the substr with last character of str
+        return longest;
+    }
+
+    // my solution with Map
+    public static String myLongestSubstringMap(String str) {
+        if (str.length() == 1) return str;
+        int count = 0;
+        String substr = "";
+        Map<String, Integer> map = new LinkedHashMap<>();
+        for (int i = 0; i < str.length(); i++) {
+            char c = str.charAt(i);
+            if (!substr.contains(c + "")) {
+                substr += c;
             } else {
                 int ind = substr.indexOf(c);
                 map.put(substr, substr.length());
-                if (longest.length()<substr.length()) longest = substr;
                 if (ind != substr.length()) substr = substr.substring(ind + 1) + c;
                 else substr = "" + c;
             }
         }
-        if (!map.containsKey(substr)) {     // checks if map contains the substr with last character of s
+        if (!map.containsKey(substr)) {     // checks if map contains the substr with last character of str
             map.put(substr, substr.length());
         }
-        if (longest.length()<substr.length()) longest = substr;
         for (Map.Entry<String, Integer> entry : map.entrySet()) {
             if (entry.getValue() > count) {
                 count = entry.getValue();
@@ -91,7 +93,7 @@ public class Algo_14_LongestSubstring {
         return substr;
     }
 
-    public static String bestLongestSubstringWithoutDuplication(String str) {   // best solution for me
+    public static String bestLongestSubstringWithoutDuplication(String str) {
         if (str.isEmpty()) return "";
         int longestStart =0;
         int longestEnd =1;
@@ -112,7 +114,7 @@ public class Algo_14_LongestSubstring {
 
     // O(n) time | O(min(n, a)) space
     public static String longestSubstringWithoutDuplication(String str) {
-        Map<Character, Integer> lastSeen = new HashMap<Character, Integer>();
+        Map<Character, Integer> lastSeen = new HashMap<>();
         int longestStart =0;
         int longestEnd =1;
         int currentStartIdx = 0;
