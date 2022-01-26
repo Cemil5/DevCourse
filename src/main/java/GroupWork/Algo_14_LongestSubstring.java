@@ -24,7 +24,7 @@ Sample Output
  */
 public class Algo_14_LongestSubstring {
     @DataProvider(name = "input")
-    public Object[][] getInputArrays(){
+    public Object[][] inputMethod(){
         return new Object[][]{
                 {"abcabcbb",    "abc" },
                 {"clementisacap", "mentisac" },

@@ -1,7 +1,10 @@
 package GroupWork;
 
+import org.testng.Assert;
+import org.testng.annotations.DataProvider;
+import org.testng.annotations.Test;
+
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 /*
@@ -21,69 +24,28 @@ Sample Output
 6 // 0, 10, 6, 5, -1, -3
  */
 public class Algo_13_LongestPeak {
-    public static void main(String[] args) {
-        int[] arrayTest={1, 2, 3, 3, 4, 0, 10, 6, 5, -1, -3, 2, 3};
- /*       System.out.println(myLongestPeak(arrayTest));
-        System.out.println(longestPeak(arrayTest));
 
-// these arrays can be used to test
-        int[] arr1 = new int[]{1, 2, 3, 3, 4, 0, 10, 6, 5, -1, -3, 2, 3};//6
-        System.out.println(Arrays.toString(arr1) + "==> 6 ::: " + myLongestPeak(arr1));
-        int[] arr2 = new int[]{1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 10};//0
-        System.out.println(Arrays.toString(arr2) + "==> 0 ::: " + myLongestPeak(arr2));
-        int[] arr3 = new int[]{1, 2, 3};//0
-        System.out.println(Arrays.toString(arr3) + "==> 0 ::: " + myLongestPeak(arr3));
-        int[] arr4 = new int[]{3, 3, 3};//0
-        System.out.println(Arrays.toString(arr4) + "==> 0 ::: " + myLongestPeak(arr4));
-        int[] arr5 = new int[]{-3, -13, -23};//0
-        System.out.println(Arrays.toString(arr5) + "==> 0 ::: " + myLongestPeak(arr5));
-        int[] arr6 = new int[]{-3, 3, 1, 2, 3 , -10, -18, 7};//5
-        System.out.println(Arrays.toString(arr6) + "==> 5 ::: " + myLongestPeak(arr6));
-*/
-        int[] nums1 = {1, 2, 3, 5, 3, 7, 15, 2, 16, 3, 0};   //  ->  5 // [1, 2, 3, 5, 3]
-        System.out.println(Arrays.toString(nums1) + "==> 4 ::: " + myLongestPeak(nums1));
-        System.out.println("nums1 = " + longestPeak3(nums1).size() + " // " + longestPeak(nums1));
-
-        int[] nums3 = {1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11};   //  ->  0 // []
-        System.out.println(Arrays.toString(nums3) + "==> 0 ::: " + myLongestPeak(nums3));
-
-        int[] nums4 = {11, 10, 9, 8, 7, 6, 5, 4, 3, 2, 1};   //  ->  0 // []
-        System.out.println(Arrays.toString(nums4) + "==> 0 ::: " + myLongestPeak(nums4));
-
-        int[] nums5 = {1, 2, 3, 4, 4, 7, 7, 2, 1, 0, 0};   //  ->  0 // []
-        System.out.println(Arrays.toString(nums5) + "==> 0 ::: " + myLongestPeak(nums5));
-
-        int[] nums6 = {1, 2, 3, 3, 4, 0, 10, 6, 5, -1, -3, 2, 3};   //  ->  6 // [0, 10, 6, 5, -1, -3]
-        System.out.println(Arrays.toString(nums6) + "==> 0 ::: " + myLongestPeak(nums6));
-
-        int[] nums7 = {1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1};   //  ->  0 // []
-        System.out.println(Arrays.toString(nums7) + "==> 0 ::: " + myLongestPeak(nums7));
-
-        int[] nums8 = {1, 2, 1};   //  ->  3 // [1, 2, 1]
-        System.out.println(Arrays.toString(nums8) + "==> 3 ::: " + myLongestPeak(nums8));
-
-        int[] nums9 = {1};   //  ->  0 // []
-        System.out.println(Arrays.toString(nums9) + "==> 0 ::: " + myLongestPeak(nums9));
-
-        int[] nums10 = {1};   //  ->  0 // []
-        System.out.println(Arrays.toString(nums10) + "==> 0 ::: " + myLongestPeak(nums10));
-
-        int[] nums11 = new int[0];   //  ->  0 // []
-        System.out.println(Arrays.toString(nums11) + "==> 0 ::: " + myLongestPeak(nums11));
-
-/*
-        System.out.println("nums1 = " + longestPeak3(nums1).size() + " // " + longestPeak(nums1));
-        System.out.println("nums3 = " + longestPeak3(nums3).size() + " // " + longestPeak(nums3));
-        System.out.println("nums4 = " + longestPeak3(nums4).size() + " // " + longestPeak(nums4));
-        System.out.println("nums5 = " + longestPeak3(nums5).size() + " // " + longestPeak(nums5));
-        System.out.println("nums6 = " + longestPeak3(nums6).size() + " // " + longestPeak(nums6));
-        System.out.println("nums7 = " + longestPeak3(nums7).size() + " // " + longestPeak(nums7));
-        System.out.println("nums8 = " + longestPeak3(nums8).size() + " // " + longestPeak(nums8));
-        System.out.println("nums9 = " + longestPeak3(nums9).size() + " // " + longestPeak(nums9));
-        System.out.println("nums10 = " + longestPeak3(nums10).size() + " // " + longestPeak(nums10));
-        System.out.println("nums11 = " + longestPeak3(nums11).size() + " // " + longestPeak(nums11));
-
- */
+    @DataProvider(name = "input")
+    public Object[][] inputMethod(){
+        return new Object[][]{
+                {new int[]{1, 2, 3, 3, 4, 0, 10, 6, 5, -1, -3, 2, 3}, 6},
+                {new int[]{1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 10}, 0},
+                {new int[]{1, 2, 3}, 0},
+                {new int[]{3, 3, 3}, 0},
+                {new int[]{-3, -13, -23}, 0},
+                {new int[]{-3, 3, 1, 2, 3 , -10, -18, 7}, 5},
+                {new int[]{1, 2, 3, 5, 3, 7, 15, 2, 16, 3, 0}, 5},
+                {new int[]{1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11}, 0},
+                {new int[]{11, 10, 9, 8, 7, 6, 5, 4, 3, 2, 1}, 0},
+                {new int[]{1, 2, 3, 4, 4, 7, 7, 2, 1, 0, 0}, 0},
+                {new int[]{1, 2, 1}, 3},
+                {new int[]{0}, 0},
+        };
+    }
+    @Test(dataProvider = "input")
+    public void test1(int[] input, int expected){
+        Assert.assertEquals(myLongestPeak(input), expected);
+        Assert.assertEquals(longestPeak(input), expected);
     }
 
     // my solution
