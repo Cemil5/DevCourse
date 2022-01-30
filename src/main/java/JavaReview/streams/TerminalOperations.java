@@ -1,12 +1,10 @@
 package JavaReview.streams;
 
-import JavaReview.Collections.ArrayLists;
+import JavaReview.Collections.ArrayListReview;
 import JavaReview.OOP.Encapsulation.Role;
 
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
-import java.util.Optional;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
@@ -23,11 +21,11 @@ public class TerminalOperations {
         System.out.println(count);
 
         System.out.println("*************** FIND FIRST - FIND ANY *************");
-        Role r = ArrayLists.createRoleList().stream().filter(role -> role.getDescription().equals("Employee")).findFirst().get();
+        Role r = ArrayListReview.createRoleList().stream().filter(role -> role.getDescription().equals("Employee")).findFirst().get();
         System.out.println(r.getId());
 
         Role r2 =
-                ArrayLists.createRoleList().stream().filter(role -> role.getDescription().equals("Employee")).findAny().get();
+                ArrayListReview.createRoleList().stream().filter(role -> role.getDescription().equals("Employee")).findAny().get();
         System.out.println(r.getId());
 
         System.out.println("*************** COLLECT *************");

@@ -1,6 +1,6 @@
 package DataStructure.LinkedList;
 
-public class MyLinkedList <T>{
+public class MyLinkedList<T>{
 
     public class Node{
         Node next;

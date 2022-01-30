@@ -1,7 +1,5 @@
 package DataStructure.LinkedList;
 
-import java.util.NoSuchElementException;
-
 public class DeleteLast {
     public static void main(String[] args) {
 

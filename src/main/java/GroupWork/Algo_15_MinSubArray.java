@@ -18,7 +18,7 @@ array = [1, 2, 4, 7, 10, 11, 7, 12, 6, 7, 16, 18, 19]
 Sample Output
 [3, 9]
  */
-public class Algo_15_SubArray_MinMax {
+public class Algo_15_MinSubArray {
     @DataProvider(name = "input")
     public Object[][] dataMethod(){
         return new Object[][]{

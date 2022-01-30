@@ -1,6 +1,5 @@
 package DataStructure.LinkedList;
 
-import java.security.PublicKey;
 import java.util.NoSuchElementException;
 
 public class OurLinkedList {
@@ -16,27 +15,34 @@ public class OurLinkedList {
 
     public Node first;
     public Node last;
-    public int size;
 
     public OurLinkedList() {
         this.first = null;
         this.last = null;
-        this.size = 0;
     }
 
     public boolean isEmpty(){
         return first == null;
     }
 
+    public int size(){
+        Node current = first;
+        int size = 0;
+        while (current != null){
+            size++;
+            current = current.next;
+        }
+        return size;
+    }
+
     public void addLast(int item){
         var node = new Node(item);
-        System.out.println("adding an item : " + item);
+     //   System.out.println("adding an item : " + item);
         if (isEmpty()) first  = last = node;
         else {
             last.next = node;
             last = node;
         }
-        size++;
     }
 
     public void insertInOrder(int item) {
@@ -58,7 +64,6 @@ public class OurLinkedList {
                 current.next = node;
             }
         }
-        size++;
     }
 
     public void myinsertInOrder(int item) {
@@ -84,7 +89,6 @@ public class OurLinkedList {
                 last = node;
             }
         }
-        size++;
     }
 
     public void deleteLast(){
@@ -100,35 +104,20 @@ public class OurLinkedList {
             }
             previous.next = null;
             last = previous;
-            size--;
         }
     }
 
     public void printLinkedList(){
-        if (isEmpty()){ throw new NoSuchElementException(); }
-        var current = first;
-        while ((current != null)){
-            System.out.println("value : " + current.value);
+        Node current = first;
+        String comma = "LinkedList : ";
+        while (current != null){
+            System.out.print(comma + current.value);
+            comma = ", ";
             current = current.next;
         }
+        System.out.println();
     }
 
-
-    public Node reverse() {
-
-        Node prev = first;
-        Node current = first.next;
-        while (current != null) {
-            Node nextNode = current.next;
-            current.next = prev;
-            prev = current;
-            current = nextNode;
-        }
-        last = first;
-        last.next = null;
-        first = prev;
-        return first;
-    }
     public Node findingKthValueFromEnd(int k){
         if (isEmpty()) throw new NoSuchElementException();
 
@@ -189,57 +178,6 @@ public class OurLinkedList {
         } else {
             System.out.println("middle elements = " + middleEven.value + " and " +  middle.value);
         }
-
-    }
-
-
-
-    public boolean isPalindrome(){
-        Node reversed = reverse();
-        Node current = first;
-        Node revCur = reversed;
-        while (revCur != null){
-         //   System.out.println("reversed.value = " + revCur.value);
-         //   System.out.println("current.value = " + current.value);
-            if (revCur.value != current.value) return false;
-            revCur = revCur.next;
-            current = current.next;
-        }
-        return true;
-    }
-
-
-    // doesn't work
-    // used in isPalindrome
-    public OurLinkedList reverse(OurLinkedList list) {
-        OurLinkedList result = new OurLinkedList();
-        Node prev = list.first;
-        Node current = list.first.next;
-        while (current != null) {
-            Node nextNode = current.next;
-            current.next = prev;
-            prev = current;
-            current = nextNode;
-        }
-        result.last = first;
-        result.last.next = null;
-        result.first = prev;
-        return result;
-    }
-
-    // doesn't work
-    public boolean isPalindrome(OurLinkedList list){
-        OurLinkedList reversed = reverse(list);
-        Node current = list.first;
-        Node revCur = reversed.first;
-        while (revCur != null){
-            System.out.println("reversed.value = " + revCur.value);
-            System.out.println("current.value = " + current.value);
-            if (revCur.value != current.value) return false;
-            revCur = revCur.next;
-            current = current.next;
-        }
-        return true;
     }
 
 
@@ -278,7 +216,7 @@ public class OurLinkedList {
         return list1;
     }
 
-    public void shiftList(OurLinkedList list, int k){
+    public OurLinkedList shiftList(OurLinkedList list, int k){
         Node newLast;
         if (k>0) newLast = list.findingKthValueFromEnd(k+1);
         else {
@@ -289,17 +227,15 @@ public class OurLinkedList {
             newLast = current;
         }
 
-
         Node newFirst = newLast.next;
 
         newLast.next = null;
         last.next = first;
         first = newFirst;
         last = newLast;
-        list.printLinkedList();
-      //  return list.first;
+      //  list.printLinkedList();
+        return list;
     }
-
 
     public static Node shiftLinkedList(Node head, int k) {
         int listLength = 1;
@@ -329,6 +265,7 @@ public class OurLinkedList {
         Node prev = list.first;;
         OurLinkedList result = new OurLinkedList();
         int max = list.first.value;
+        int size = size();
         while (size > 1) {
             while (current.next != null) {
                 if (max < current.next.value) {

@@ -20,7 +20,6 @@ always have at least one node; in other words, the head will never be None / nul
 
         var list1 = new OurLinkedList();
 
-        list1.addLast(0);
         list1.addLast(1);
         list1.addLast(2);
         list1.addLast(3);
@@ -31,7 +30,10 @@ always have at least one node; in other words, the head will never be None / nul
         list1.addLast(8);
         list1.addLast(9);
 
-        list1.shiftList(list1, -2);
+        list1.shiftList(list1, -2).printLinkedList();
+
+      //  System.out.println(list1.shiftLinkedList(list1.first, 2).value);
+
 
     }
 

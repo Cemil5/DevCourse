@@ -21,7 +21,7 @@ integer value as well as a next node pointing to the next node in the list.
             list1.addLast(i);
         }
 
-     //   list1.last.next = list1.findingKthValueFromEnd(2);
+        list1.last.next = list1.findingKthValueFromEnd(2);
 
         System.out.println(list1.findLoopOrigin().value);
 

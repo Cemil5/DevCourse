@@ -24,7 +24,7 @@ public class ReverseList {
         list1.addLast(9);
 
         System.out.println("Reversed linked list1 ");
-        list1.reverse();
+        list1 = GroupWork.Algo_21_isPalindrome_LinkedList.reverse(list1);
         list1.printLinkedList();
 
     }
