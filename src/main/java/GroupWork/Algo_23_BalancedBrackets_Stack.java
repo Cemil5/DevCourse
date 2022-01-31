@@ -1,10 +1,5 @@
 package GroupWork;
-/*
-this question is a topic covered in compilers course in computer science (3rd-year compulsory course) in terms of
-syntax analysis which is done by the compilers. I know we covered this algorithm in the DSA class but,
-it is important to understand the algorithm.  Please try to implement it from scratch.
- */
-/*
+/**
 Question # 23
 Description: Balanced Brackets
 Difficulty: Medium Category: Stacks
