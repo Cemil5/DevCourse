@@ -31,7 +31,7 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Stack;
 
-public class Algo_23_BalancedBrackets {
+public class Algo_23_BalancedBrackets_Stack {
     @DataProvider(name = "data")
     public Object[][] getData(){
         return new Object[][]{
@@ -47,11 +47,29 @@ public class Algo_23_BalancedBrackets {
 
     @Test(dataProvider = "data")
     public void test(String inputString, boolean expectedResult){
-     //   Assert.assertEquals(myIsBracketsBalanced(inputString), expectedResult);
-        Assert.assertEquals(isBalanced(inputString), expectedResult);
+        Assert.assertEquals(isBracketsBalanced1(inputString), expectedResult);
+        Assert.assertEquals(isBracketsBalanced2(inputString), expectedResult);
     }
 
-    public boolean myIsBracketsBalanced(String input){
+    boolean isBracketsBalanced1(String str){
+
+        Map<Character,Character> map = new HashMap<>();
+        map.put(')','(');
+        map.put(']','[');
+        map.put('}','{');
+        Stack<Character> stack = new Stack<>();
+
+        for(Character ch : str.toCharArray()){
+            if (ch.equals('(') || ch.equals('[') || ch.equals('{')) stack.push(ch);
+            else if(map.containsKey(ch)) {
+                if (stack.empty() || stack.pop() != map.get(ch)) return false;
+            }
+        }
+
+        return stack.size()==0;
+    }
+
+    boolean isBracketsBalanced2(String input){
         Stack<Character> stack = new Stack<>();
         for (int i=0; i<input.length(); i++){
             char ch = input.charAt(i);
@@ -75,22 +93,4 @@ public class Algo_23_BalancedBrackets {
         return stack.size() == 0;
     }
 
-
-    static boolean isBalanced(String str){      // best solution for me
-
-        Map<Character,Character> map = new HashMap<>();
-        map.put(')','(');
-        map.put(']','[');
-        map.put('}','{');
-        Stack<Character> stack = new Stack<>();
-
-        for(Character ch : str.toCharArray()){
-            if (ch.equals('(') || ch.equals('[') || ch.equals('{')) stack.push(ch);
-            else if(map.containsKey(ch)) {
-                if (stack.empty() || stack.pop() != map.get(ch)) return false;
-            }
-        }
-
-        return stack.size()==0;
-    }
 }

@@ -37,7 +37,7 @@ Constraints:
 • All the integers in s are in the range [1, 300]
  */
 
-public class Algo_24_DecodeString {
+public class Algo_24_DecodeString_Stack {
     @DataProvider(name = "data")
     public Object[][] input(){
         return new Object[][]{
