@@ -7,75 +7,107 @@ import java.util.Stack;
 public class Tree {
 
     // Nested node class
-    public class Node{
-        public Node leftChild;
-        public Node rightChild;
-        public int value;
+    public class TreeNode {
+        public TreeNode left;
+        public TreeNode right;
+        public int val;
 
-        public Node(int value){
-            this.value = value;
+        public TreeNode(int value){
+            this.val = value;
         }
     }
 
-    public Node root;
+    public TreeNode root;
 
     // I added on 03.02.2022
-    int depth(Node node) {
+    int depth(TreeNode node) {
         if (node == null)
             return -1;
         else {   // compute  depth of each subtree
-            int lDepth = depth(node.leftChild) ;
-            int rDepth = depth(node.rightChild) ;
+            int lDepth = depth(node.left) ;
+            int rDepth = depth(node.right) ;
             return Math.max(lDepth, rDepth) +1 ;      // use the larger one
         }
     }
 
     public void insert (int value){
-        Node node = new Node(value);
+        TreeNode node = new TreeNode(value);
         if (root == null) root = node;
         else {
-            Node current = root;
+            TreeNode current = root;
             boolean isAssigned = false;
             while (!isAssigned) {
-                if (value <= current.value) {
-                    if (current.leftChild == null){
-                        current.leftChild = node;
+                if (value <= current.val) {
+                    if (current.left == null){
+                        current.left = node;
                         isAssigned = true;
                     } else
-                        current = current.leftChild;
+                        current = current.left;
                 } else {
-                    if (current.rightChild == null){
-                        current.rightChild = node;
+                    if (current.right == null){
+                        current.right = node;
                         isAssigned = true;
                     } else
-                        current = current.rightChild;
+                        current = current.right;
                 }
             }
         }
     }
 
+    // I added on 07.02.2022
+    public static int Min(TreeNode root ){
+        while(root.left!=null){      // we go left because min value is present in left part of tree
+            root = root.left;
+        }
+        return root.val;//at last return root value
+    }
+    public TreeNode deleteNode(TreeNode root, int key) {
+        if(root==null)      //if root null than simply return null
+            return null;
+        if(key<root.val)      //if key less than root value than call delete for root  left  part
+            root.left = deleteNode(root.left, key);
+        else if(key>root.val)   //if key greater than root value than call delete for root  right  part
+            root.right=deleteNode(root.right,key);
+        else {
+            if(root.left==null && root.right==null) //if found than check it left and right part null than simply delete
+                return null;
+            else
+            if(root.left==null)     //if root left only null means right child present
+                return root.right;  //Then simply return  root right
+            else
+            if(root.right==null)    //if root right only null means left child present
+                return root.left;   //Then simply return root left
+            else {
+                root.val=Min(root.right);   //if two child present than find inorder successor and replace the root value by inorder successor value
+                root.right=deleteNode(root.right,root.val); //and delete root inorder successor node
+            }
+        }
+        return root;//return root
+
+    }
+
     // I added 01.02.2022
     // deletion in binary search tree
     public boolean delete (int num){
-        Node prev = root;
-        Node current = root;
+        TreeNode prev = root;
+        TreeNode current = root;
         while (current != null) {
-            if (current.value == num) {
+            if (current.val == num) {
                 // The node to be deleted is a leaf node
-                if (current.leftChild == null && current.rightChild == null) {
-                    if (prev.value > num)
-                        prev.leftChild = null;
+                if (current.left == null && current.right == null) {
+                    if (prev.val > num)
+                        prev.left = null;
                     else
-                        prev.rightChild = null;
+                        prev.right = null;
                     break;
                 //   The node to be deleted has only one child. replace it with the NULL and free the allocated space.
-                } else if (current.leftChild == null || current.rightChild == null){
-                    if (current.leftChild != null) {
-                        current.value = current.leftChild.value;
-                        current.leftChild = null;
+                } else if (current.left == null || current.right == null){
+                    if (current.left != null) {
+                        current.val = current.left.val;
+                        current.left = null;
                     } else {
-                        current.value = current.rightChild.value;
-                        current.rightChild = null;
+                        current.val = current.right.val;
+                        current.right = null;
                     }
        // The node to be deleted has two children. the node which is to be deleted, is replaced with its
        // in-order successor or predecessor recursively until the node value (to be deleted) is placed on the leaf
@@ -84,12 +116,12 @@ public class Tree {
 
                 }
             } else {
-                    if (current.value < num) {
+                    if (current.val < num) {
                         prev = current;
-                        current = current.rightChild;
+                        current = current.right;
                     } else {
                         prev = current;
-                        current = current.leftChild;
+                        current = current.left;
                     }
                 }
         }
@@ -112,15 +144,15 @@ public class Tree {
 
     // I added 01.02.2022
     public boolean isLeaf (int num){
-        Node current = root;
+        TreeNode current = root;
         while (current != null){
-            if (current.value == num)
-                return current.leftChild == null && current.rightChild == null;
+            if (current.val == num)
+                return current.left == null && current.right == null;
             else {
-                if (current.value < num)
-                    current = current.rightChild;
+                if (current.val < num)
+                    current = current.right;
                 else
-                    current = current.leftChild;
+                    current = current.left;
             }
         }
         return false;
@@ -128,16 +160,16 @@ public class Tree {
 
     // I added 01.02.2022
     public int distance (int num){
-        Node current = root;
+        TreeNode current = root;
         int distance = 0;
         while (current != null){
-            if (current.value == num)
+            if (current.val == num)
                 return distance;
             else {
-                if (current.value < num)
-                    current = current.rightChild;
+                if (current.val < num)
+                    current = current.right;
                 else
-                    current = current.leftChild;
+                    current = current.left;
                 distance++;
             }
         }
@@ -151,12 +183,12 @@ public class Tree {
     }
 
     ArrayList<Integer> list = new ArrayList<>();
-    private void traversePreOrder(Node node){
+    private void traversePreOrder(TreeNode node){
         if (node == null) return;
-        System.out.print(node.value + ", ");
-        list.add(node.value);
-        traversePreOrder(node.leftChild);
-        traversePreOrder(node.rightChild);
+        System.out.print(node.val + ", ");
+        list.add(node.val);
+        traversePreOrder(node.left);
+        traversePreOrder(node.right);
     }
 
 /*
@@ -164,16 +196,16 @@ there is tricky part in the middle of the algorithm, where you have to push righ
 which is different from the recursive algorithm
 Read more: https://javarevisited.blogspot.com/2016/07/binary-tree-preorder-traversal-in-java-using-recursion-iteration-example.html#ixzz7JviL2PyB
  */
-    public void preOrderWithIteration(Node node) {
-        Stack<Node> stack = new Stack<>();
+    public void preOrderWithIteration(TreeNode node) {
+        Stack<TreeNode> stack = new Stack<>();
         stack.push(node);
         while (!stack.isEmpty()) {
-            Node current = stack.pop();
-            System.out.printf("%s  ", current.value);
-            if (current.rightChild != null)
-                stack.push(current.rightChild);
-            if (current.leftChild != null)
-                stack.push(current.leftChild);
+            TreeNode current = stack.pop();
+            System.out.printf("%s  ", current.val);
+            if (current.right != null)
+                stack.push(current.right);
+            if (current.left != null)
+                stack.push(current.left);
         }
         System.out.println();
     }
@@ -192,11 +224,11 @@ Call the inOrder(node.right) to recursively traverse the right subtree.
  you go deep on the left subtree until you find the leaf node. Once you find that, the recursive stack starts to
  unwind, and it prints node data and starts to explore the right subtree.
  */
-    private void traverseInOrder(Node node){
+    private void traverseInOrder(TreeNode node){
         if (node == null) return;
-        traverseInOrder(node.leftChild);
-        System.out.print(node.value + ", ");
-        traverseInOrder(node.rightChild);
+        traverseInOrder(node.left);
+        System.out.print(node.val + ", ");
+        traverseInOrder(node.right);
     }
 /**
 We start with the root and process until current node is not or Stack is not empty.
@@ -205,16 +237,16 @@ print its value and starts exploring right subtree by assigning current = curren
 becomes empty, at that point, the tree traversal is finished and all elements of the binary tree is visited.
  */
     public void traverseInOrderWithIteration() {
-        Stack<Node> stack = new Stack<>();
-        Node current = root;
+        Stack<TreeNode> stack = new Stack<>();
+        TreeNode current = root;
         while (!stack.isEmpty() || current != null) {
             if (current != null) {
                 stack.push(current);
-                current = current.leftChild;
+                current = current.left;
             } else {
                 current = stack.pop();
-                System.out.printf("%s  ", current.value);
-                current = current.rightChild;
+                System.out.printf("%s  ", current.val);
+                current = current.right;
             }
         }
     }
@@ -225,11 +257,11 @@ becomes empty, at that point, the tree traversal is finished and all elements of
         traversePostOrder(root);
     }
 
-    private void traversePostOrder(Node node){
+    private void traversePostOrder(TreeNode node){
         if (node == null) return;
-        traversePostOrder(node.leftChild);
-        traversePostOrder(node.rightChild);
-        System.out.print(node.value + ", ");
+        traversePostOrder(node.left);
+        traversePostOrder(node.right);
+        System.out.print(node.val + ", ");
     }
 
     /*
@@ -245,21 +277,21 @@ to null, similarly, we check if it has left a node, if yes we push into the stac
 post-order traversal we need to explore the left subtree before the right subtree.
      */
     public void postOrderWithIteration() {
-        Stack<Node> stack = new Stack<>();
+        Stack<TreeNode> stack = new Stack<>();
         stack.push(root);
         while (!stack.isEmpty()) {
-            Node current = stack.peek();
-            if (current.leftChild == null && current.rightChild == null) {
+            TreeNode current = stack.peek();
+            if (current.left == null && current.right == null) {
                 current = stack.pop();
-                System.out.printf("%s  ", current.value);
+                System.out.printf("%s  ", current.val);
             } else {
-                if (current.rightChild != null) {
-                    stack.push(current.rightChild);
-                    current.rightChild = null;
+                if (current.right != null) {
+                    stack.push(current.right);
+                    current.right = null;
                 }
-                if (current.leftChild != null) {
-                    stack.push(current.leftChild);
-                    current.leftChild = null;
+                if (current.left != null) {
+                    stack.push(current.left);
+                    current.left = null;
                 }
             }
         }

@@ -20,7 +20,7 @@ public class TreeExe {
         myTree.traversePreOrder();
 
 
-    /*    System.out.println(myTree.delete(7));
+        System.out.println(myTree.deleteNode(myTree.root, 4));
         System.out.println("PreOrder traversal tree after DELETION : ");
         myTree.traversePreOrder();
 

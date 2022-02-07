@@ -1,44 +1,59 @@
 package myTests;
 
 public class DeleteNode {
-/*
+
+    public static class TreeNode {
+        int val;
+        TreeNode left;
+        TreeNode right;
+
+        TreeNode(int x) {
+            val = x;
+        }
+        TreeNode(int x, TreeNode left, TreeNode right) {
+            val = x;
+            this.left = left;
+            this.right = right;
+        }
+    }
+
+    TreeNode root;
+
     public static int Min(TreeNode root )
     {
-        while(root.left!=null)// we go left beacause min value is present in left part of tree
+        while(root.left!=null)// we go left because min value is present in left part of tree
         {
-            root=root.left;
+            root = root.left;
         }
-        return root.val;//atlast return root value
+        return root.val;//at last return root value
     }
     public TreeNode deleteNode(TreeNode root, int key) {
-        if(root==null)//if root null than simply return null
+        if(root==null)      //if root null than simply return null
             return null;
-        if(key<root.val)//if key less than root value than call delete for root  left  part
-            root.left=deleteNode(root.left,key);
-        else
-        if(key>root.val)//if key greater than root value than call delete for root  right  part
+        if(key<root.val)      //if key less than root value than call delete for root  left  part
+            root.left = deleteNode(root.left, key);
+        else if(key>root.val)   //if key greater than root value than call delete for root  right  part
             root.right=deleteNode(root.right,key);
-        else
-        {
-            if(root.left==null && root.right==null)//if found than cheq it left and right part null than simply delete
+        else {
+            if(root.left==null && root.right==null) //if found than check it left and right part null than simply delete
                 return null;
             else
-            if(root.left==null)//if root left only null means right child present
-                return root.right;//than simply return  root right
+            if(root.left==null)     //if root left only null means right child present
+                return root.right;  //Then simply return  root right
             else
-            if(root.right==null)//if root right only null means left child present
-                return root.left;//than simply return root left
+            if(root.right==null)    //if root right only null means left child present
+                return root.left;   //Then simply return root left
             else
             {
-                root.val=Min(root.right);//if two child present than find inorder successor and replace the root value by inorder succesor value
-                root.right=deleteNode(root.right,root.val);//and delete root inorder succesor node
+                root.val=Min(root.right);   //if two child present than find inorder successor and replace the root value by inorder successor value
+                root.right=deleteNode(root.right,root.val); //and delete root inorder successor node
             }
         }
         return root;//return root
 
     }
 
-
+/*
 //******************************
     int findMin(TreeNode head, TreeNode root)
     {
