@@ -52,7 +52,7 @@ public class Algo_24_DecodeString_Stack {
 
     @Test(dataProvider = "data")
     public void test(String input, String expected){
-        Assert.assertEquals(myDecode(input), expected);
+        Assert.assertEquals(decodeString1(input), expected);
     //    Assert.assertEquals(decodeString(input), expected);
     //    Assert.assertEquals(decodeString1(input), expected);
     //    Assert.assertEquals(decodeString5(input), expected);
@@ -60,7 +60,7 @@ public class Algo_24_DecodeString_Stack {
     //    Assert.assertEquals(getCrMySol3(input), expected);
     }
 
-    public String myDecode(String input){   // good enough without slack
+    public String decodeString3(String input){   // good enough without slack
         while (input.contains("]")){
             int closingBracket = input.indexOf("]");
             int openingBracket = input.substring(0, closingBracket).lastIndexOf("[");
@@ -230,8 +230,7 @@ public class Algo_24_DecodeString_Stack {
         return result;
     }
 
-    // after getting the right point from @sezginm abi's solution. tested and passed at leetcode
-    // but there is no stack in this solution. just for a diff approach...
+    // there is no stack in this solution. just for a diff approach...
     public static String getCrMySol3(String s){
         while (s.contains("[")){
             String generatedValue = "";//holds the String value that we generate based on the occurrence such as "aaaa"
