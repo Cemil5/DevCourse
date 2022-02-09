@@ -1,4 +1,22 @@
 package GroupWork;
+/**
+Question #29
+Breadth First Traversal of Binary Tree (Level Order)
+Difficulty :Easy Category :Tree
+Write a method that takes in a Binary Tree and traverse it in level order. Be ready to talk about the
+implementation.
+Sample input:
+               1
+            /   \
+           2     3
+         / \    / \
+        4   5   6   7
+      /     \
+     8       9
+
+ Sample Output:
+ 1,2,3,4,5,6,7,8,9
+ */
 
 public class Algo_29_Breadth_BinaryTree {
 
