@@ -31,7 +31,7 @@ public class IntermediateOperations {
 
         Arrays.asList("Apple", "Orange", "Kiwi", "Banana", "Apple", "Cherry", "Mango").stream().map(str -> str.toUpperCase(Locale.ROOT)).forEach(System.out::println);
 
-        System.out.println("*************** MAP *************");
+        System.out.println("*************** distinct *************");
         Arrays.asList("Apple", "Orange", "Kiwi", "Banana", "Apple", "Cherry", "Mango").stream().distinct().forEach(System.out::println);
 
         System.out.println("*************** SORTED ORDER *************");

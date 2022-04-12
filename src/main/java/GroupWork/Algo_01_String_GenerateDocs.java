@@ -1,6 +1,7 @@
 package GroupWork;
 
 import java.util.*;
+import java.util.concurrent.atomic.AtomicBoolean;
 import java.util.stream.Collectors;
 
 /*  question 1
@@ -14,7 +15,8 @@ equal to the frequency of unique characters in the document string.
 For example, if you're given characters = "abcabc" and document = "aabbccc" you
 cannot generate the document because you're missing one c . The document that you need
 to create may contain any characters, including special characters, capital letters, numbers,
-and spaces. Note: you can always generate the empty string ( "" ).
+and spaces.
+Note: you can always generate the empty string ( "" ).
 Sample Input :
 characters = "!veDJaCyd vaeo perelo xw"
 document = "Cydeo Java Developer!"
@@ -26,22 +28,52 @@ public class Algo_01_String_GenerateDocs {
         String characters = "!veDJaCyd vaeo perelo xw";
         String document = "Cydeo Java Developer!";
 
-        System.out.println(generateDocs(characters, document) ? "PASS" : "FAIL");   // best solution for me
-        System.out.println(genDocs(characters, document) ? "PASS" : "FAIL");  // my first solution
-        System.out.println(generateDocumentBruteForce(characters, document));
-        System.out.println(generateDocumentOptimal(characters, document));
-
-        System.out.println("canGenerate3_stream(characters,document) = " + canGenerate3_stream(characters, document));
-        System.out.println("canGenerate4(characters, document) = " + canGenerate4(characters, document));
-        System.out.println("canGenerate5(characters, document) = " + canGenerate5(characters, document));
-
+//        System.out.println(generateDocs(characters, document) ? "PASS" : "FAIL");   // best solution for me
+//        System.out.println(genDocs(characters, document) ? "PASS" : "FAIL");  // my first solution
+//        System.out.println(generateDocumentBruteForce(characters, document));
+//        System.out.println(generateDocumentOptimal(characters, document));
+//
+//        System.out.println("canGenerate3_stream(characters,document) = " + canGenerate3_stream(characters, document));
+//        System.out.println("canGenerate4(characters, document) = " + canGenerate4(characters, document));
+//        System.out.println("canGenerate5(characters, document) = " + canGenerate5(characters, document));
+        System.out.println("generateDocument2(characters, document) = " + generateDocument2(characters, document));
     }
+
+    public  static AtomicBoolean checkDocument(String given, String doc) {
+
+        AtomicBoolean result = new AtomicBoolean(false);
+        doc.chars().forEach(value -> {
+            if ((given.chars().filter(ch -> ch == value).count())>=(doc.chars().filter(ch -> ch == value).count()))
+                result.set(true);
+            else result.set(false);
+        });
+        return result;
+    }
+
+    public static Boolean generateDocument2(String characters, String document) {
+
+        int[] charArr = new int[127];
+        for (char c : characters.toCharArray()) {
+            charArr[c]++;
+        }
+        for (char c : document.toCharArray()) {
+            if (charArr[c] < 1) {
+                return false;
+            }
+            charArr[c]--;
+        }
+        return true;
+    }
+
 
 
     // O(n + m) time | O(c) space - where n is the number of characters, m is
     // the length of the document, and c is the number of unique characters in the
     // characters string
-    public static boolean generateDocs(String chars, String doc){       // best solution for me
+    // best solution for me
+    public static boolean generateDocs(String chars, String doc){
+        if (doc.equals("")) return true;
+        if (chars.length()<doc.length()) return false;
 
         Map<Character, Integer> map = new HashMap<>();
 
@@ -49,13 +81,24 @@ public class Algo_01_String_GenerateDocs {
             map.put(ch, map.getOrDefault(ch, 0) +1);
         }
 
-//        Map<String,Integer> charMap = new HashMap<>();
-//        Arrays.stream(chars.split("")).forEach(x->{    charMap.putIfAbsent(x,0);
-//                                                             charMap.put(x, charMap.get(x)+1);});
-
         for (Character ch : doc.toCharArray()){
             if (!map.containsKey(ch) || map.get(ch) == 0) return false;
             map.put(ch, map.get(ch) - 1);
+        }
+        return true;
+    }
+
+    static boolean compareDocument(String characters, String document){
+
+        Map<Character, Integer> map = new HashMap<>();
+
+        for (char ch : characters.toCharArray()){
+            map.putIfAbsent(ch, 0);
+            map.computeIfPresent(ch, (k , v) -> v + 1);
+        }
+
+        for (char ch : document.toCharArray()){
+            if (!map.containsKey(ch) || map.computeIfPresent(ch, (k,v) -> v - 1) < 0) return false;
         }
         return true;
     }

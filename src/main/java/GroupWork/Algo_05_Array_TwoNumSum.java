@@ -1,6 +1,6 @@
 package GroupWork;
 
-import java.util.Arrays;
+import java.util.*;
 
 /*
 Question # 5
@@ -24,9 +24,10 @@ public class Algo_05_Array_TwoNumSum {
         int[] distinct = {3, 5, -4, 8, 11, 1, -1, 6};
         int targetSum = 10;
         System.out.println(Arrays.toString(twoNumberSum(distinct, targetSum)));
+        System.out.println(Arrays.toString(twoNumberSum2(distinct, targetSum)));
     }
 
-    // my solution
+    // my first solution
     public static int[] twoNumberSum(int[] distinct, int targetSum){
         for (int i = 0; i<distinct.length; i++){
             for (int j = i +1; j<distinct.length;j++){
@@ -37,4 +38,36 @@ public class Algo_05_Array_TwoNumSum {
         }
         return new int[2];
     }
+
+
+    // after udemy
+    public static int[] twoNumberSum2(int[] distinct, int targetSum){
+        Set<Integer> set = new HashSet<>();
+        set.add(distinct[0]);
+        for (int i = 1; i<distinct.length; i++){
+            int key = targetSum-distinct[i];
+            if (set.contains(key)){
+                return new int[]{key, distinct[i]};
+            } else {
+                set.add(distinct[i]);
+            }
+        }
+        return new int[2];
+    }
+
+    // after udemy : finds index of these numbers
+    public static int[] twoNumberSum3(int[] distinct, int targetSum){
+        Map<Integer, Integer> map = new HashMap<>();
+        map.put(distinct[0], 0);
+        for (int i = 1; i<distinct.length; i++){
+            int key = targetSum-distinct[i];
+            if (map.containsKey(key)){
+                return new int[]{map.get(key), i};
+            } else {
+                map.put(distinct[i], i);
+            }
+        }
+        return new int[2];
+    }
+
 }
