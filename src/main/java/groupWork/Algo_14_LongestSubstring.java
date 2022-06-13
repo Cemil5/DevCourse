@@ -14,13 +14,17 @@ import static java.util.Comparator.comparing;
 /*
 Question #14
 Longest Substring Without Duplication
-Difficulty : - Category : Strings
+Difficulty : Medium Category : Strings
 Write a function that takes in a string and returns its longest substring without duplicate characters.
 You can assume that there will only be one longest substring without duplication.
-Sample Input
-string = "clementisacap"
-Sample Output
-"mentisac"
+Sample Input string = "clementisacap"
+Sample Output = "mentisac"
+Sample Input string = "abcabcbb"
+Sample Output = "abc"
+Sample Input string = "cydeo"
+Sample Output = "cydeo"
+
+
  */
 public class Algo_14_LongestSubstring {
     @DataProvider(name = "input")
@@ -32,6 +36,7 @@ public class Algo_14_LongestSubstring {
                 {"asljlj",      "aslj" },
                 {"ohomm",       "hom"},
                 {"bbbbb",       "b"},
+                {"Cydeo",       "Cydeo"},
                 {"au",          "au"},
                 {"aab",         "ab"},
                 {" ",           " " },
@@ -39,10 +44,21 @@ public class Algo_14_LongestSubstring {
         };
     }
     @Test(dataProvider = "input")
-    public void test1(String input, String expected){
+    public void test(String input, String expected){
         System.out.println(input +" "+ expected);
         Assert.assertEquals(myLongestSubstring(input), expected);
        // Assert.assertEquals(bestLongestSubstringWithoutDuplication(input), expected);
+      //  Assert.assertEquals(removeDuplicate(input), expected);
+    }
+
+    public static String removeDuplicate (String text){
+        String result = "";
+        for (int i = 0; i < text.length(); i++) {
+            if (!result.contains(text.charAt(i) + "")) {
+                result += text.charAt(i);
+            }
+        }
+        return result;
     }
 
     // my final solution with String
@@ -60,7 +76,9 @@ public class Algo_14_LongestSubstring {
                 substr = substr.substring(indexDuplicated + 1) + c;
             }
         }
-        if (longest.length() < substr.length()) longest = substr; // checks if longest contains the substr with last character of str
+        if (longest.length() < substr.length()) {
+            longest = substr; // checks if longest contains the substr with last character of str
+        }
         return longest;
     }
 

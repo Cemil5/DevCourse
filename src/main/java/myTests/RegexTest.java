@@ -22,8 +22,8 @@ public class RegexTest {
 
         //  Java email validation permitted by RFC 5322
         System.out.println("email check: " + email.matches("^[a-zA-Z0-9_!#$%&’*+/=?`{|}~^.-]+@(?!-)[a-zA-Z0-9.-]+$"));
-        // https://howtodoinjava.com/java/regex/java-regex-validate-email-address/
 
+        // https://howtodoinjava.com/java/regex/java-regex-validate-email-address/
 
         List<String> emails = new ArrayList<>();
         emails.add("user@domain.com");

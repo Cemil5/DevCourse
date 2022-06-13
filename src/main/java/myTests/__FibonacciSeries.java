@@ -7,7 +7,7 @@ public class __FibonacciSeries {
 
 	public static void main(String[] args) {
 
-//		Scanner scan = new Scanner(System.in);
+//		ScannerTest scan = new ScannerTest(System.in);
 //		System.out.println("Enter terms number:");
 //		int termsNumber = scan.nextInt();
 		int termsNumber = 8;

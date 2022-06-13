@@ -9,6 +9,14 @@ public class LeapYear {
         Scanner scan = new Scanner(System.in);
         System.out.println("Enter any Year:");
         int year = scan.nextInt();
+
+        if ((year % 4 == 0 && year % 100 != 0) || year % 400 == 0) {
+            System.out.println("leap year");
+        } else
+            System.out.println("not leap");
+
+
+
         boolean isLeap;
 
         if(year % 4 == 0){
@@ -40,12 +48,11 @@ public class LeapYear {
 
     static void test1 () {
         int year = 1900;
-        boolean isLeap = (year % 4 == 0 && year % 100 != 0) || year % 400 == 0 ?  true : false;
+        System.out.println((year % 4 == 0 && year % 100 != 0) || year % 400 == 0 ?  "leap year" : "not leap");
 //        if ((year % 4 == 0 && year % 100 != 0) || year % 400 == 0) {
 //            System.out.println("leap year");
 //        } else
 //            System.out.println("not leap");
-        System.out.println(isLeap);
     }
 
 }

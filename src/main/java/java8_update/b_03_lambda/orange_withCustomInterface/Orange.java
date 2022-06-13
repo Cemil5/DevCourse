@@ -1,0 +1,19 @@
+package java8_update.b_03_lambda.orange_withCustomInterface;
+
+import lombok.Builder;
+import lombok.Data;
+
+//@Getter
+//@Setter
+//@ToString
+@Builder
+@Data
+public class Orange {
+
+    private int weight;
+    private Color color;
+
+}
+
+
+//@Builder generates an @AllArgsConstructor unless there is another @XConstructor
