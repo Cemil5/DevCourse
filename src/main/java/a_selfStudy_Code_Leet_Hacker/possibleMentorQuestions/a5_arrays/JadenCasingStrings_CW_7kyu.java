@@ -70,7 +70,7 @@ Note that the Java version expects a return value of null for an empty string or
                 array[i] = Character.toUpperCase(array[i]);
             }
         }
-        return new String(array);
+        return Arrays.toString(array);
     }
 
     public String toJadenCase4(String phrase) {
